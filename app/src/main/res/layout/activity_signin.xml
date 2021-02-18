@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="50sp"
-            android:text="Healing Camp"
+            android:text="@string/main_phrase"
             android:fontFamily="@font/nanumbarunpenbold"
             android:textStyle="bold"
             android:textColor="#fff"/>
@@ -37,7 +37,7 @@
             android:textSize="24sp"
             android:layout_marginTop="6dp"
             android:textColor="#FFF"
-            android:text="For the Wounded"
+            android:text="@string/sub_phrase"
             android:fontFamily="@font/nanumbarunpenbold"/>
 
     </LinearLayout>
@@ -55,11 +55,13 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:background="#F8DE5A"
+            android:fontFamily="@font/nanumbarunpenbold"
+            android:textColor="@color/primaryColor"
             android:id="@+id/btnKakao"
-            android:text="카카오로 쉬운 시작"
+            android:text="@string/kakao_login"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:textStyle="bold"
-            android:textSize="18sp"/>
+            android:textSize="22sp"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
@@ -67,13 +69,14 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:id="@+id/btnNaver"
+            android:fontFamily="@font/nanumbarunpenbold"
             android:background="#5DC539"
             android:layout_marginTop="24dp"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:textColor="#FFF"
             android:textStyle="bold"
-            android:text="네이버로 쉬운 시작"
-            android:textSize="18sp"/>
+            android:text="@string/naver_login"
+            android:textSize="22sp"/>
 
         
     </LinearLayout>
