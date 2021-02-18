@@ -74,7 +74,7 @@ class SignInActivity : AppCompatActivity() {
                         intent.putExtra("id", user.id)
                         intent.putExtra("email", user.kakaoAccount?.email)
                         intent.putExtra("nickname", user.kakaoAccount?.profile?.nickname)
-                        intent.putExtra("profile", user.kakaoAccount.profile?.thumbnailImageUrl)
+                        intent.putExtra("profile", user.kakaoAccount?.profile?.thumbnailImageUrl)
                         startActivity(intent)
                     }
                 }
