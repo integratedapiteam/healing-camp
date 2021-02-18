@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">힐링캠프</string>
+
+    <string name="naver_client_id">V1U1Zf0S0uOR0nOfotal</string>
+    <string name="naver_client_secret">a84vc6bk78</string>
+    <string name="naver_client_name">힐링캠프</string>
+
+</resources>
