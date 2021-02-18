@@ -5,4 +5,6 @@
     <string name="naver_client_secret">a84vc6bk78</string>
     <string name="naver_client_name">힐링캠프</string>
 
+    <string name="kakao_app_key">77c0cc212fc29b0e95c01ad2495fa578</string>
+
 </resources>
