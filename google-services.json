@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1005953081849",
+    "project_id": "healing-camp",
+    "storage_bucket": "healing-camp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005953081849:android:ad66b71bb63c47dc639d28",
+        "android_client_info": {
+          "package_name": "kr.co.hksoft.healingcamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005953081849-q6fcncuk3kr09a2clfp3eev5te8qfpb5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.co.hksoft.healingcamp",
+            "certificate_hash": "19f48f789116b5ff8f15ee79e3e6102c7aae5437"
+          }
+        },
+        {
+          "client_id": "1005953081849-j84ckj6hc4hgb3nnk23089ck50daouit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ZMt8OTOR5_qmrsoWp3McAO5O-fLy8FE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005953081849-j84ckj6hc4hgb3nnk23089ck50daouit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
