@@ -11,6 +11,8 @@ import android.util.Base64.NO_WRAP
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.util.Utility
@@ -33,6 +35,7 @@ class SignInActivity : AppCompatActivity() {
 
     lateinit var mOAuthLoginInstance: OAuthLogin
     lateinit var mContext: Context
+    val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class SignInActivity : AppCompatActivity() {
         Timber.v(keyHash)
     }
 
+    @SuppressLint("BinaryOperationInTimber")
     override fun onResume() {
         super.onResume()
 
@@ -70,12 +74,30 @@ class SignInActivity : AppCompatActivity() {
                                 "\n이메일: ${user.kakaoAccount?.email}" +
                                 "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                                 "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
-                        val intent: Intent = Intent(this@SignInActivity, RegisterActivity::class.java)
-                        intent.putExtra("id", user.id)
-                        intent.putExtra("email", user.kakaoAccount?.email)
-                        intent.putExtra("nickname", user.kakaoAccount?.profile?.nickname)
-                        intent.putExtra("profile", user.kakaoAccount?.profile?.thumbnailImageUrl)
-                        startActivity(intent)
+
+                        val userRef = db.collection("users")
+                        userRef.whereEqualTo("id", user.id.toString())
+                                .get()
+                                .addOnSuccessListener { documents ->
+                                    when (documents.size()) {
+                                        0 -> {
+                                            val intent: Intent = Intent(this@SignInActivity, RegisterActivity::class.java)
+                                            intent.putExtra("id", user.id.toString())
+                                            intent.putExtra("email", user.kakaoAccount?.email)
+                                            intent.putExtra("nickname", user.kakaoAccount?.profile?.nickname)
+                                            intent.putExtra("profile", user.kakaoAccount?.profile?.thumbnailImageUrl)
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                        else -> {
+                                            Timber.d("Sign In!")
+                                            val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                                            intent.putExtra("id", user.id.toString())
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                    }
+                                }
                     }
                 }
             }
@@ -116,16 +138,45 @@ class SignInActivity : AppCompatActivity() {
                                    .build()
 
                     val api = retrofit.create(NaverAPI::class.java)
-                    val getInfoNaver = api.getUserInfo(resources.getString(R.string.naver_client_id),
-                                                       resources.getString(R.string.naver_client_secret),
-                                                       accessToken)
+                    val getInfoNaver = api.getUserInfo(clientId = resources.getString(R.string.naver_client_id),
+                                                       clientSecret = resources.getString(R.string.naver_client_secret),
+                                                       accessToken = "Bearer " + accessToken)
 
                     getInfoNaver.enqueue(object: retrofit2.Callback<NaverResponse> {
                         override fun onResponse(call: Call<NaverResponse>, response: Response<NaverResponse>) {
-                            TODO("Not yet implemented")
-                            Timber.d("성공: ${response.raw()}")
-                            val intent: Intent = Intent(mContext, RegisterActivity::class.java)
-                            startActivity(intent)
+                            Timber.d("성공: ${response.body()?.toString()}")
+
+                            Timber.d("id %s", response.body()?.response?.id)
+
+                            val id = response.body()?.response?.id
+                            val email = response.body()?.response?.email
+                            val nickname = response.body()?.response?.nickname
+                            val profile = response.body()?.response?.profile_image
+
+                            val userRef = db.collection("users")
+                            userRef.whereEqualTo("id", id.toString())
+                                    .get()
+                                    .addOnSuccessListener { documents ->
+                                        when (documents.size()) {
+                                            0 -> {
+                                                val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                                                intent.putExtra("id", id.toString())
+                                                intent.putExtra("email", email.toString())
+                                                intent.putExtra("nickname", nickname.toString())
+                                                intent.putExtra("profile", profile.toString())
+
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                            else -> {
+                                                Timber.d("Sign In!")
+                                                val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                                                intent.putExtra("id", id.toString())
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                        }
+                                    }
                         }
 
                         override fun onFailure(call: Call<NaverResponse>, t: Throwable) {

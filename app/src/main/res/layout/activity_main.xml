@@ -1,76 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/secondaryColor"
     tools:context=".activities.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@drawable/main_background"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:text="Healing Camp"
-                android:textColor="#FFF"
-                android:textStyle="bold"
-                android:fontFamily="@font/nanumbarunpenbold"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="원하는 사람들과 대화해보세요."
-                android:textColor="#FFF"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:textStyle="bold"
-                android:fontFamily="@font/nanumbarunpenregular"/>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="16dp"
-            android:id="@+id/rvMainRooms"/>
-
-    </RelativeLayout>
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/divFragmentContainer"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="원하는 커뮤니티를 탐색하세요."
-            android:textStyle="bold"
-            android:fontFamily="@font/nanumbarunpenbold"
-            android:textColor="#FFF"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottomNavigationBar"
+        app:menu="@menu/navigation_bar"
+        app:itemTextColor="#FFF"
+        app:itemIconTint="#fff"
+        app:itemIconSize="20dp"
+        app:labelVisibilityMode="labeled"
+        android:background="@color/primaryColor"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

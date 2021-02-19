@@ -47,6 +47,11 @@ class RegisterActivity : AppCompatActivity() {
         nickname = intent.getStringExtra("nickname")
         phone = intent.getStringExtra("phone")
 
+        Timber.d("id: %s", id)
+        Timber.d("email: %s", email)
+        Timber.d("nickname: %s", nickname)
+        Timber.d("phone: %s", phone)
+
         edtEmail.setText(email)
         edtNickname.setText(nickname)
         edtPhone.setText(phone)
@@ -57,26 +62,30 @@ class RegisterActivity : AppCompatActivity() {
             nickname = edtNickname.text.toString()
             phone = edtPhone.text.toString()
 
-            val user = hashMapOf(
-                    "id" to id,
-                    "email" to email,
-                    "nickname" to nickname,
-                    "phone" to phone,
-                    "gender" to gender,
-                    "createdAt" to Date()
-            )
+            if (email == "" || email == null || nickname == "" || nickname == null || phone == "" || phone == null) {
+                Toast.makeText(this, "빈 칸을 모두 채워주세요.", Toast.LENGTH_LONG).show()
+            } else {
+                val user = hashMapOf(
+                        "id" to id,
+                        "email" to email,
+                        "nickname" to nickname,
+                        "phone" to phone,
+                        "gender" to gender,
+                        "createdAt" to Date()
+                )
 
-            db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener {
-                        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        Timber.e(it.toString())
-                        Toast.makeText(this@RegisterActivity, it.toString(), Toast.LENGTH_LONG)
-                    }
+                db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener {
+                            val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Timber.e(it.toString())
+                            Toast.makeText(this@RegisterActivity, it.toString(), Toast.LENGTH_LONG)
+                        }
+            }
         }
     }
 }

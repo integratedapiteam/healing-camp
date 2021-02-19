@@ -2,29 +2,43 @@ package kr.co.hksoft.healingcamp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kr.co.hksoft.healingcamp.R
 import kr.co.hksoft.healingcamp.adapter.RoomAdapter
+import kr.co.hksoft.healingcamp.fragments.HomeFragment
 import kr.co.hksoft.healingcamp.models.Rooms
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val mOnNavigationItemSelectedListener =  BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when(item.itemId) {
+            R.id.nav_home -> {
+                return@OnNavigationItemSelectedListener true
+            }
+            else -> false
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val roomList = arrayListOf<Rooms>(
-                Rooms("마음의 힐링캠프", Date(), "https://i.pinimg.com/originals/e2/0e/11/e20e116c0d645047f2570263611e1970.jpg", "힐링캠프에서 놀다 가유"),
-                Rooms("마음의 힐링캠프", Date(), "https://i.pinimg.com/originals/e2/0e/11/e20e116c0d645047f2570263611e1970.jpg", "힐링캠프에서 놀다 가유"),
-                Rooms("마음의 힐링캠프", Date(), "https://i.pinimg.com/originals/e2/0e/11/e20e116c0d645047f2570263611e1970.jpg", "힐링캠프에서 놀다 가유"),
-                Rooms("마음의 힐링캠프", Date(), "https://i.pinimg.com/originals/e2/0e/11/e20e116c0d645047f2570263611e1970.jpg", "힐링캠프에서 놀다 가유")
-        )
+        replaceFragment(HomeFragment())
 
-        val rvMainRooms = findViewById<RecyclerView>(R.id.rvMainRooms)
-        rvMainRooms.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvMainRooms.adapter = RoomAdapter(roomList)
+        val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.bottomNavigationBar)
+        bottomNavigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    fun replaceFragment(fragment: Fragment){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.divFragmentContainer, fragment)
+        fragmentTransaction.commit()
     }
 }

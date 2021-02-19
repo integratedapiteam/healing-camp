@@ -3,7 +3,7 @@ package kr.co.hksoft.healingcamp.httpResponse
 data class NaverResponse (
     var resultCode: String = "",
     var message: String = "",
-    var response: List<Response>
+    var response: Response
 )
 
 data class Response (
